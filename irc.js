@@ -1,5 +1,9 @@
+/*
+* This code is based on the code seen here (http://www.w3schools.com/jsref/jsref_regexp_exec.asp)
+*/
 var net = require('net'),
 	fs = require('fs');
+
 exports.irc = {
 	"listeners": [],
 	"handle": function(data){
@@ -28,7 +32,7 @@ exports.irc = {
 		//Set up connect callback
 		var that = this;
 		this.socket.on('connect', function () {
-			console.log("Established connection")
+			that.log("Established connection")
 			that.on(/^PING :(.+)$/i, function(info) {
 				that.raw('PONG: '+ info[1]);
 			});
@@ -86,14 +90,17 @@ exports.irc = {
 			}
 		}
 		this.listeners.push([data, cb, false])
-		console.log(this.listeners)
 	},
 	"on_once" : function(data, callback) {
 		this.listeners.push([data, callback, true])
 	},
 	"raw" : function(data, callback) {
+		var that = this;
 		this.socket.write( data + "\n", "ascii", function() {
-			console.log('SENT -', data)
+			that.log('SENT -'+ data)
 		});
+	},
+	"log" : function(msg) {
+		console.log(msg)
 	}
 }

@@ -1,8 +1,9 @@
 exports.listeners = [
 	[
-		/:morning/i,
+		/^.*PRIVMSG\s(#.*)\s:morning/i,
 		function(data, irc) {
-			irc.msg(irc.info.channel, "Morning")
+			irc.log(data)
+			irc.msg(data[1], "Morning")
 		}
 	]
 ]
