@@ -33,8 +33,9 @@ exports.irc = {
 		var that = this;
 		this.socket.on('connect', function () {
 			that.log("Established connection")
-			that.on(/^PING :(.+)$/i, function(info) {
-				that.raw('PONG: '+ info[1]);
+			that.on(/^PING\s:(.*)\r/i, function(info){
+				that.log(info);
+				that.raw('PONG :' + info[1]);
 			});
 			setTimeout(function() {
 				that.raw('NICK '+that.info.nick);
