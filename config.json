@@ -1,0 +1,11 @@
+{
+	"nick" : "dubbot",
+	"host" : "irc.freenode.net",
+	"channel" : "#testexample",
+	"port" : 6667,
+	"real_name" : "DubBot - DublinJS",
+	"names" : {},
+	"mods" : [
+		"modules/hello.js"
+	]
+}
