@@ -1,8 +1,3 @@
-/*
-* This code is based on the code seen here (http://www.w3schools.com/jsref/jsref_regexp_exec.asp)
-*
-*/
-
 var irc = require("./irc.js").irc;
  
 /*
@@ -10,7 +5,7 @@ var irc = require("./irc.js").irc;
 */
 irc._msg= irc.msg;
 irc.msg = function(chan, msg) {
-	console.log("Wrote "+msg+" on "+chan)
+	irc.log("Wrote "+msg+" on "+chan)
 	return irc._msg(chan, msg)
 };
    

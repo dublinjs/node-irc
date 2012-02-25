@@ -1,7 +1,7 @@
 {
 	"nick" : "dubbot",
 	"host" : "irc.freenode.net",
-	"channel" : "#testexample",
+	"channel" : "#dublinjs",
 	"port" : 6667,
 	"real_name" : "DubBot - DublinJS",
 	"names" : {},
