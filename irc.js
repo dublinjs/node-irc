@@ -1,5 +1,5 @@
 /*
-* This code is based on the code seen here (http://www.w3schools.com/jsref/jsref_regexp_exec.asp)
+* This code is based on the code seen here (http://webdevrefinery.com/forums/topic/8762-writing-a-very-simple-irc-bot-in-nodejs/)
 */
 var net = require('net'),
 	fs = require('fs');
