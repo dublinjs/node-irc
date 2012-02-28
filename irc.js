@@ -25,9 +25,7 @@ exports.irc = {
 		}
 	},
 	"init": function(filename){
-		this.filename = filename || "config.json";
-		this.info = JSON.parse(
-			fs.readFileSync("config.json"));
+		this.load(filename);
 		this.socket = new net.Socket();
 		//Set up connect callback
 		var that = this;
@@ -59,6 +57,11 @@ exports.irc = {
 				that.on(listen[0], listen[1])
 			})
 		});
+	},
+	"load" : function(filename) {
+		this.filename = filename || "config.json";
+		this.info = JSON.parse(
+			fs.readFileSync("config.json"));
 	},
 	"join" : function(chan, callback) {
 		if (callback !== undefined) {
@@ -94,7 +97,7 @@ exports.irc = {
 	"on_once" : function(data, callback) {
 		this.listeners.push([data, callback, true])
 	},
-	"raw" : function(data, callback) {
+	"raw" : function(data) {
 		var that = this;
 		this.socket.write( data + "\n", "ascii", function() {
 			that.log('SENT -'+ data)
