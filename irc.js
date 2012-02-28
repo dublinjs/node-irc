@@ -34,7 +34,6 @@ exports.irc = {
 		this.socket.on('connect', function () {
 			that.log("Established connection")
 			that.on(/^PING\s:(.*)\r/i, function(info){
-				that.log(info);
 				that.raw('PONG :' + info[1]);
 			});
 			setTimeout(function() {

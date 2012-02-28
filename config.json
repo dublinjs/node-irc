@@ -7,6 +7,7 @@
 	"names" : {},
 	"mods" : [
 		"modules/hello.js",
-		"modules/meetup.js"
+		"modules/meetup.js",
+		"modules/join.js"
 	]
 }
