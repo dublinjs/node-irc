@@ -6,6 +6,7 @@
 	"real_name" : "DubBot - DublinJS",
 	"names" : {},
 	"mods" : [
-		"modules/hello.js"
+		"modules/hello.js",
+		"modules/meetup.js"
 	]
 }
