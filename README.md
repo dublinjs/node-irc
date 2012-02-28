@@ -47,6 +47,6 @@ This is a [NodeJS](http://nodejs.org/) IRC bot, which was made for the #dublinjs
 
 ##Some Resources worth a look##
 
-[The site where a lot of the irc code came from.](http://webdevrefinery.com/forums/topic/8762-writing-a-very-simple-irc-bot-in-nodejs/)
+- [The site where a lot of the irc code came from.](http://webdevrefinery.com/forums/topic/8762-writing-a-very-simple-irc-bot-in-nodejs/)
 
-[Wikipedia IRC commands page.](http://en.wikipedia.org/wiki/List_of_Internet_Relay_Chat_commands)
+- [Wikipedia IRC commands page.](http://en.wikipedia.org/wiki/List_of_Internet_Relay_Chat_commands)
