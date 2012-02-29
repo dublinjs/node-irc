@@ -1,6 +1,7 @@
 {
-	'name' : 'node-irc',
-	'version' : '0.0.1',
-	'dependencies' : {
+	"name" : "node-irc",
+	"version" : "0.0.1",
+	"dependencies" : {
+
 	}
 }
