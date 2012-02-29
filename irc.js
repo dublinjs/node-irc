@@ -51,6 +51,10 @@ exports.irc = {
 				that.handle( line );
 			});
 		});
+		this.load_mods()
+	},
+	"load_mods" : function() {
+		var that = this;
 		this.info.mods.forEach( function(mod) {
 			var temp_listen = require("./"+mod).listeners;
 			temp_listen.forEach(function(listen) {
