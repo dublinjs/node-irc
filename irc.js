@@ -4,24 +4,38 @@
 var net = require('net'),
 	fs = require('fs');
 
+_keys = function(dict) {
+	var keys = []
+	for (var key in dict)
+		if(dict.hasOwnProperty(key))
+			keys.push(key)
+	return keys;
+};
+
+
 exports.irc = {
-	"listeners": [],
+	"listeners": {},
 	"handle": function(data){
-		var i, info;
-		for (i = 0; i < this.listeners.length; i++)
+		var i, info,
+			keys = _keys(this.listeners);
+	
+		for (i = 0; i < keys.length; i++)
 		{
+			//For each key
+			var key = keys[i];
 			//This checks the regex which is the first
 			//Will not be false if matches.
 			//Those pushed on first will win.
-			info = this.listeners[i][0].exec(data);
-			if (info)
-			{
-				this.listeners[i][1](info, data);
-				if (this.listeners[i][2])
+			this.listeners[key].forEach(function (listener) {
+				info = listener[0].exec(data);
+				if (info)
 				{
-					this.listeners.splice(i, 1);
+					listener[1](info, data);
 				}
-			}
+			})
+			this.listeners[key] = this.listeners[key].filter(function(listener) {
+				return ! listener[2];
+			});
 		}
 	},
 	"init": function(filename){
@@ -58,7 +72,7 @@ exports.irc = {
 		this.info.mods.forEach( function(mod) {
 			var temp_listen = require("./"+mod).listeners;
 			temp_listen.forEach(function(listen) {
-				that.on(listen[0], listen[1])
+				that.on(listen[0], listen[1], mod)
 			})
 		});
 	},
@@ -89,17 +103,23 @@ exports.irc = {
 			}
 		}, 1000);
 	},
-	"on" : function(data, callback) {
+	"on" : function(data, callback, key) {
 		var that = this;
+		key = key || "general";
 		if (callback !== undefined) {
 			var cb = function (info) {
 				return callback(info, that);
 			}
 		}
-		this.listeners.push([data, cb, false])
+		if(!(this.listeners.hasOwnProperty(key)))
+			this.listeners[key] = []
+		this.listeners[key].push([data, cb, false])
 	},
-	"on_once" : function(data, callback) {
-		this.listeners.push([data, callback, true])
+	"on_once" : function(data, callback, key) {
+		key = key || "general";
+		if(!(this.listeners.hasOwnProperty(key)))
+			this.listeners[key] = []
+		this.listeners[key].push([data, callback, true])
 	},
 	"raw" : function(data) {
 		var that = this;

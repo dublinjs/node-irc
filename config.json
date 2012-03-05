@@ -1,5 +1,5 @@
 {
-	"nick" : "dubbot_heroku",
+	"nick" : "dubbot",
 	"host" : "irc.freenode.net",
 	"channel" : "#dublinjs",
 	"port" : 6667,
