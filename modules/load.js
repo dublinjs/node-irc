@@ -39,17 +39,16 @@ exports.listeners = [
 		}
 	],
 	[
-	/^.*PRIVMSG\s(#.*)\s:\\unload\s(.+)\r/i,
-	function(data, irc) {
-		if(irc.listeners.hasOwnProperty(data[2])){
-			for (var i=0;i < irc.listeners[data[2]].length;i++) {
-				irc.listeners[data[2]][i][2] = true
+		/^.*PRIVMSG\s(#.*)\s:\\unload\s(.+)\r/i,
+		function(data, irc) {
+			if(irc.listeners.hasOwnProperty(data[2])){
+				for (var i=0;i < irc.listeners[data[2]].length;i++) {
+					irc.listeners[data[2]][i][2] = true
+				}
+				irc.msg(data[1], "module "+data[2]+" unload success.")
+			}else{
+				irc.msg(data[1], "module "+data[2]+" unload failure.")
 			}
-			irc.msg(data[1], "module "+data[2]+" unload success.")
-		}else{
-			irc.msg(data[1], "module "+data[2]+" unload failure.")
-			console.log(irc.listeners)
 		}
-	}
-]
+	]
 ]
