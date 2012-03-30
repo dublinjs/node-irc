@@ -15,6 +15,7 @@ _keys = function(dict) {
 
 exports.irc = {
 	"listeners": {},
+	"events": {},
 	"handle": function(data){
 		var i, info,
 			keys = _keys(this.listeners);
@@ -38,6 +39,19 @@ exports.irc = {
 			});
 		}
 	},
+	"interval_setup": function(module_name, func, interval) {
+		var that = this;
+		var new_func = function() {
+			return func(that);
+		}
+		this.events["module_name"] = []
+		this.events["module_name"].push(
+			setInterval(
+				new_func,
+				interval * 1000
+			)
+		);
+	},
 	"init": function(filename){
 		this.load(filename);
 		this.socket = new net.Socket();
@@ -56,6 +70,7 @@ exports.irc = {
 				}, 500);
 			}, 500);
 		});
+		// Set up interval in which to run events
 		this.socket.setEncoding('ascii');
 		this.socket.setNoDelay();
 		this.socket.connect(this.info.port, this.info.host);
@@ -70,10 +85,21 @@ exports.irc = {
 	"load_mods" : function() {
 		var that = this;
 		this.info.mods.forEach( function(mod) {
-			var temp_listen = require("./"+mod).listeners;
-			temp_listen.forEach(function(listen) {
-				that.on(listen[0], listen[1], mod)
-			})
+			var mod_obj = require("./"+mod)
+			var temp_listen = mod_obj.listeners;
+			if(temp_listen) {
+				temp_listen.forEach(function(listen) {
+					that.on(listen[0], listen[1], mod)
+				})
+			}
+			var mod_events = mod_obj.events;
+			if(mod_events){
+				that.interval_setup(
+					mod,
+					mod_events[0],
+					mod_events[1]
+				)
+			}
 		});
 	},
 	"load" : function(filename) {
