@@ -1,3 +1,5 @@
+var fs = require("fs");
+
 exports.listeners = [
 	[
 		/^:(.*)\!.*\sPRIVMSG\s(#.*)\s:(.+)/i,
@@ -35,4 +37,31 @@ exports.listeners = [
 			irc.msg(channel, resp);
 		}
 	]
+]
+
+exports.events = [
+	function(irc) {
+		if(irc.store) {
+			var file = fs.open("logs.json", "w",
+						function(err, fd) {
+							var store = JSON.stringify(
+									irc.store
+									)
+							fs.write(fd,
+								store
+							);
+						});
+		}else{
+			fs.readFile("logs.json",  
+					function(err, data) {
+						if(err){
+							console.log(err);
+							return;
+						}
+						irc.store = JSON.parse(data);
+					})
+			irc.log("No store, get more chatty");
+		}
+	},
+	300
 ]
