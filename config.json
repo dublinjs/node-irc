@@ -1,14 +1,13 @@
 {
 	"nick" : "dubbot",
 	"host" : "irc.freenode.net",
-	"channel" : "#dublinjs",
+	"channel" : "#testexample",
 	"port" : 6667,
 	"real_name" : "DubBot - DublinJS",
 	"names" : {},
 	"mods" : [
 		"modules/meetup.js",
 		"modules/join.js",
-		"modules/load.js"
 		"modules/load.js",
 		"modules/stats.js"
 	]
